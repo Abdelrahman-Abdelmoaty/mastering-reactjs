@@ -1,0 +1,7 @@
+.PhoneInput {
+	@apply w-full rounded border border-gray-300 p-2 text-neutral-950;
+}
+
+.PhoneInputInput {
+	@apply !text-neutral-950;
+}
