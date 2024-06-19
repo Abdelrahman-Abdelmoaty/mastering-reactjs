@@ -32,6 +32,7 @@ export default function InternationalPhoneNumberInput({
 				control={control}
 				render={({ field }) => (
 					<PhoneInputWithCountrySelect
+						international
 						className="w-full rounded border border-gray-300 p-2"
 						{...field}
 					/>

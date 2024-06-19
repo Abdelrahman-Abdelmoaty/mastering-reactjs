@@ -2,7 +2,7 @@ import axios from "axios";
 
 const axiosInstance = axios.create({
 	// The base URL for the request
-	baseURL: "https://dummyjson.com/",
+	baseURL: import.meta.env.VITE_BASE_URL,
 	// Specifies the number of milliseconds before the request times out
 	timeout: 5000,
 	headers: {
