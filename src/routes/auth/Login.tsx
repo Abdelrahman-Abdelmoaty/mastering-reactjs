@@ -6,11 +6,28 @@ import { toast } from "sonner";
 import { setSession } from "../../lib/session";
 import loginHandler from "../../server/auth/login";
 import loginSchema, { type LoginFields } from "../../schemas/auth/login";
+import { User, Lock } from "lucide-react";
 
 // TODO: Add loading state
 // TODO: Add password visibility toggle
 // TODO: Add forgot password link
 // TODO: Add login with username or email
+
+const LOGIN_FIELDS = [
+	{
+		name: "username",
+		label: "Username",
+		placeholder: "Enter your username",
+		icon: <User className="size-5" />,
+	},
+	{
+		name: "password",
+		label: "Password",
+		placeholder: "Enter your password",
+		type: "password",
+		icon: <Lock className="size-5" />,
+	},
+];
 
 export default function Login() {
 	const methods = useForm<LoginFields>({
@@ -36,16 +53,9 @@ export default function Login() {
 	return (
 		<FormProvider {...methods}>
 			<form onSubmit={methods.handleSubmit(onSubmit)}>
-				<ValidatedInput
-					name="username"
-					label="Username"
-					placeholder="Enter your username"
-				/>
-				<ValidatedInput
-					name="password"
-					label="Password"
-					placeholder="Enter your password"
-				/>
+				{LOGIN_FIELDS.map((field) => (
+					<ValidatedInput key={field.name} {...field} />
+				))}
 				<button type="submit">Submit</button>
 			</form>
 		</FormProvider>

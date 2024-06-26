@@ -4,14 +4,15 @@ import Login from "./routes/auth/Login";
 import Register from "./routes/auth/Register";
 import ProtectedRoutes from "./components/Layouts/ProtectedRoutes";
 import Layout from "./components/Layouts/Layout";
+import Posts from "./routes/posts/Posts";
 
 const router = createBrowserRouter([
 	{
-		path: "/",
+		path: "",
 		element: <Layout />,
 		children: [
 			{
-				path: "/",
+				path: "",
 				element: <Home />,
 			},
 			{
@@ -26,6 +27,10 @@ const router = createBrowserRouter([
 						element: <Register />,
 					},
 				],
+			},
+			{
+				path: "posts",
+				element: <Posts />,
 			},
 			{
 				path: "protected",

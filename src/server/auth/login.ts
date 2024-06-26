@@ -4,9 +4,12 @@ import { LoginFields } from "../../schemas/auth/login";
 
 export default async function loginHandler(loginFields: LoginFields) {
 	try {
-		const response = await axiosInstance.post("/auth/login", loginFields);
+		const response = await axiosInstance.post("/auth/login", {
+			username: loginFields.username,
+			pwd: loginFields.password,
+		});
 		if (response.status === 200) {
-			return response.data;
+			return response.data.data;
 		} else {
 			throw response.data.message || "An unknown error occurred";
 		}

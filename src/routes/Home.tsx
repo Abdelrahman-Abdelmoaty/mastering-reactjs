@@ -1,5 +1,3 @@
-import ThemeSwitcher from "../theme/ThemeSwitcher";
-
 function Home() {
 	return (
 		<main>
@@ -8,10 +6,10 @@ function Home() {
 					Comprehensive ReactJS Template - Best Practices & Advanced
 					Technologies
 				</h1>
-				<ThemeSwitcher />
-				{/* <p className="mt-4 text-center text-4xl">
-					Kickstart your project with our cutting-edge ReactJS template.
-				</p> */}
+				<p className="mt-4 text-center text-4xl">
+					Kickstart your project with our cutting-edge ReactJS
+					template.
+				</p>
 			</div>
 		</main>
 	);

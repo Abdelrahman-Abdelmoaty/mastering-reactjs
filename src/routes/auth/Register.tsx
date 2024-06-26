@@ -9,12 +9,54 @@ import registerSchema, {
 } from "../../schemas/auth/register";
 import registerHandler from "../../server/auth/register";
 import InternationalPhoneNumberInput from "../../components/Forms/InternationalPhoneNumberInput";
+import { Mail, User, Lock } from "lucide-react";
 
 // TODO: Validate Confirm Password
 // TODO: Add password strength meter
 // TODO: Add password visibility toggle
 // TODO: Add loading state
 // TODO: Add international phone number input
+
+const REGISTER_FIELDS = [
+	{
+		name: "firstName",
+		label: "First Name",
+		placeholder: "Enter your first name",
+		icon: <User className="size-5" />,
+	},
+	{
+		name: "lastName",
+		label: "Last Name",
+		placeholder: "Enter your last name",
+		icon: <User className="size-5" />,
+	},
+	{
+		name: "email",
+		label: "Email",
+		placeholder: "Enter your email",
+		icon: <Mail className="size-5" />,
+	},
+	{
+		name: "username",
+		label: "Username",
+		placeholder: "Enter your username",
+		icon: <User className="size-5" />,
+	},
+	{
+		name: "password",
+		label: "Password",
+		placeholder: "••••••••",
+		type: "password",
+		icon: <Lock className="size-5" />,
+	},
+	{
+		name: "confirmPassword",
+		label: "Confirm Password",
+		placeholder: "••••••••",
+		type: "password",
+		icon: <Lock className="size-5" />,
+	},
+];
 
 export default function Register() {
 	const methods = useForm<RegisterFields>({
@@ -42,38 +84,9 @@ export default function Register() {
 	return (
 		<FormProvider {...methods}>
 			<form onSubmit={methods.handleSubmit(onSubmit)}>
-				<ValidatedInput
-					name="firstName"
-					label="First Name"
-					placeholder="Enter your first name"
-				/>
-				<ValidatedInput
-					name="lastName"
-					label="Last Name"
-					placeholder="Enter your last name"
-				/>
-				<ValidatedInput
-					name="email"
-					label="Email"
-					placeholder="Enter your email"
-				/>
-				<ValidatedInput
-					name="username"
-					label="Username"
-					placeholder="Enter your username"
-				/>
-				<ValidatedInput
-					name="password"
-					label="Password"
-					type="password"
-					placeholder="••••••••"
-				/>
-				<ValidatedInput
-					name="confirmPassword"
-					label="Confirm Password"
-					type="password"
-					placeholder="••••••••"
-				/>
+				{REGISTER_FIELDS.map((field) => (
+					<ValidatedInput key={field.name} {...field} />
+				))}
 				<InternationalPhoneNumberInput
 					name="phoneNumber"
 					label="Phone Number"
