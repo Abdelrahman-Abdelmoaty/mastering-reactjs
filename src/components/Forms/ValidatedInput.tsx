@@ -23,10 +23,7 @@ export default function ValidatedInput({
 
 	return (
 		<div className="mb-4">
-			<label
-				htmlFor={name}
-				className="mb-2 block text-sm font-bold text-gray-700"
-			>
+			<label htmlFor={name} className="mb-2 block font-bold">
 				{label}
 			</label>
 			<div className="relative">
@@ -35,7 +32,7 @@ export default function ValidatedInput({
 					id={name}
 					placeholder={placeholder}
 					className={cn(
-						"focus:shadow-outline w-full appearance-none rounded border px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none",
+						"focus:shadow-outline w-full appearance-none rounded border bg-neutral-50 px-3 py-2 font-medium leading-tight placeholder-neutral-400 shadow focus:outline-none dark:bg-neutral-950 dark:text-neutral-50",
 						{
 							"border-red-500": errors[name],
 							"pl-10": icon,
@@ -48,12 +45,12 @@ export default function ValidatedInput({
 						{icon}
 					</div>
 				)}
-				{errors[name] && typeof errors[name].message === "string" && (
-					<p className="text-xs italic text-red-500">
-						{errors[name].message}
-					</p>
-				)}
 			</div>
+			{errors[name] && typeof errors[name].message === "string" && (
+				<p className="text-sm italic text-red-500">
+					{errors[name].message}
+				</p>
+			)}
 		</div>
 	);
 }

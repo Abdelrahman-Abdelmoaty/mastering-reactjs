@@ -7,6 +7,10 @@ import { setSession } from "../../lib/session";
 import loginHandler from "../../server/auth/login";
 import loginSchema, { type LoginFields } from "../../schemas/auth/login";
 import { User, Lock } from "lucide-react";
+import { cn } from "../../lib/utils";
+import Button from "../../components/ui/Button";
+import useAuth from "../../contexts/auth/useAuth";
+import { useLocation, useNavigate } from "react-router-dom";
 
 // TODO: Add loading state
 // TODO: Add password visibility toggle
@@ -18,14 +22,14 @@ const LOGIN_FIELDS = [
 		name: "username",
 		label: "Username",
 		placeholder: "Enter your username",
-		icon: <User className="size-5" />,
+		icon: <User />,
 	},
 	{
 		name: "password",
 		label: "Password",
 		placeholder: "Enter your password",
 		type: "password",
-		icon: <Lock className="size-5" />,
+		icon: <Lock />,
 	},
 ];
 
@@ -34,11 +38,19 @@ export default function Login() {
 		resolver: zodResolver(loginSchema),
 	});
 
-	const { mutate } = useMutation({
+	const { setSession: setSessionContext } = useAuth();
+	const navigate = useNavigate();
+	const location = useLocation();
+	const from = location.state?.from || "/";
+
+	const { mutate, isPending } = useMutation({
 		mutationKey: ["login"],
 		mutationFn: loginHandler,
-		onSuccess: (data) => {
-			setSession(data);
+
+		onSuccess: async (data) => {
+			await setSession(data);
+			setSessionContext(data);
+			navigate(from);
 			toast.success("Login successful");
 		},
 		onError: (error: string) => {
@@ -51,13 +63,24 @@ export default function Login() {
 	};
 
 	return (
-		<FormProvider {...methods}>
-			<form onSubmit={methods.handleSubmit(onSubmit)}>
-				{LOGIN_FIELDS.map((field) => (
-					<ValidatedInput key={field.name} {...field} />
-				))}
-				<button type="submit">Submit</button>
-			</form>
-		</FormProvider>
+		<div className="mx-auto my-auto w-full max-w-xl rounded-lg bg-neutral-100 p-6 shadow dark:bg-neutral-900">
+			<h2 className="mb-6 text-4xl font-extrabold italic">Login</h2>
+			<FormProvider {...methods}>
+				<form onSubmit={methods.handleSubmit(onSubmit)} className="">
+					{LOGIN_FIELDS.map((field) => (
+						<ValidatedInput key={field.name} {...field} />
+					))}
+					<Button
+						type="submit"
+						disabled={isPending}
+						className={cn({
+							"bg-gray-400": isPending,
+						})}
+					>
+						Submit
+					</Button>
+				</form>
+			</FormProvider>
+		</div>
 	);
 }

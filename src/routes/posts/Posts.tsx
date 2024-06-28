@@ -39,9 +39,9 @@ export default function Posts() {
 					{/*  eslint-disable-next-line
 					@typescript-eslint/no-explicit-any */}
 					{data.map((post: any) => (
-						<div key={post.PostID}>
-							<h3>{post.Title}</h3>
-							<p>{post.Content}</p>
+						<div key={post.postId}>
+							<h3>{post.title}</h3>
+							<p>{post.content}</p>
 						</div>
 					))}
 				</div>

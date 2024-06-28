@@ -10,6 +10,8 @@ import registerSchema, {
 import registerHandler from "../../server/auth/register";
 import InternationalPhoneNumberInput from "../../components/Forms/InternationalPhoneNumberInput";
 import { Mail, User, Lock } from "lucide-react";
+import Button from "../../components/ui/Button";
+import { cn } from "../../lib/utils";
 
 // TODO: Validate Confirm Password
 // TODO: Add password strength meter
@@ -63,7 +65,7 @@ export default function Register() {
 		resolver: zodResolver(registerSchema),
 	});
 
-	const { mutate } = useMutation({
+	const { mutate, isPending } = useMutation({
 		mutationKey: ["register"],
 		mutationFn: registerHandler,
 		onSuccess: (data) => {
@@ -82,18 +84,28 @@ export default function Register() {
 	};
 
 	return (
-		<FormProvider {...methods}>
-			<form onSubmit={methods.handleSubmit(onSubmit)}>
-				{REGISTER_FIELDS.map((field) => (
-					<ValidatedInput key={field.name} {...field} />
-				))}
-				<InternationalPhoneNumberInput
-					name="phoneNumber"
-					label="Phone Number"
-				/>
-
-				<button type="submit">Submit</button>
-			</form>
-		</FormProvider>
+		<div className="mx-auto my-auto w-full max-w-xl rounded-lg bg-neutral-100 p-6 shadow dark:bg-neutral-900">
+			<h2 className="mb-6 text-4xl font-extrabold italic">Register</h2>
+			<FormProvider {...methods}>
+				<form onSubmit={methods.handleSubmit(onSubmit)}>
+					{REGISTER_FIELDS.map((field) => (
+						<ValidatedInput key={field.name} {...field} />
+					))}
+					<InternationalPhoneNumberInput
+						name="phoneNumber"
+						label="Phone Number"
+					/>
+					<Button
+						type="submit"
+						disabled={isPending}
+						className={cn({
+							"bg-gray-400": isPending,
+						})}
+					>
+						Submit
+					</Button>
+				</form>
+			</FormProvider>
+		</div>
 	);
 }

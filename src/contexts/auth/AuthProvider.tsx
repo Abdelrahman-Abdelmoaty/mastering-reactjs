@@ -4,10 +4,12 @@ import Session from "../../types/session";
 
 type AuthContextType = {
 	session: Session | null;
+	setSession: (session: Session) => void;
 };
 
 export const AuthContext = createContext<AuthContextType>({
 	session: null,
+	setSession: () => {},
 });
 
 const AuthProvider = ({ children }: { children: React.ReactNode }) => {
@@ -22,7 +24,7 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 	}, []);
 
 	return (
-		<AuthContext.Provider value={{ session: session }}>
+		<AuthContext.Provider value={{ session, setSession }}>
 			{children}
 		</AuthContext.Provider>
 	);
